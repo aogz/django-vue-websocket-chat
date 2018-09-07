@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Log in' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form class="card" method="post">
+                    <div class="card-body">
+                        <h5 class="card-title">{% trans 'Log in' %}</h5>
+                        <hr />
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <button class="btn btn-primary" type="submit">{% trans 'Log in' %}</button>
+                        <a class="ml-3" href="{% url 'password_reset' %}">{% trans 'Forgot your password' %}?</a>
+                    </div>
+                </form>
+                <div class="text-center text-muted">
+                    {% trans 'Don`t have account yet' %}? <a href="{% url 'register' %}">{% trans 'Sign up' %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

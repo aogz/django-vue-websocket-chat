@@ -1,0 +1,1 @@
+# django-webpack-vue-boilerplate
