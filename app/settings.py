@@ -151,3 +151,6 @@ LOGIN_REDIRECT_URL = reverse_lazy('chat-app')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
 LOGIN_URL = reverse_lazy('login')
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}

@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Channel(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     is_private = models.BooleanField(default=False)
 
     def add_message(self, text, sender, receiver=None):

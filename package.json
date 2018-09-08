@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bootstrap-vue": "^2.0.0-rc.11",
+    "js-cookie": "^2.2.0",
     "vue": "^2.5.17",
     "vue-websocket": "^0.2.3",
     "vuejs-noty": "^0.1.3",

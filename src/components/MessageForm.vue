@@ -1,12 +1,17 @@
 <template>
-    <form>
-        <input name="message" placeholder="Your message" autocomplete="off" class="form-control"/>
+    <form :submit.prevent="sendMessage">
+        <input name="message" placeholder="Your message" autocomplete="off" class="form-control" required="required"/>
     </form>
 </template>
 
 
 <script>
     export default {
-        name: 'MessageForm'
+        name: 'MessageForm',
+        methods: {
+            sendMessage() {
+
+            }
+        }
     }
 </script>

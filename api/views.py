@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework import permissions
+from django_filters.rest_framework import DjangoFilterBackend
 
 from chat import models as chat_models
 from api import serializers
@@ -22,4 +23,6 @@ class MessagesListView(generics.ListAPIView):
     queryset = chat_models.Message.objects
     serializer_class = serializers.MessageSerializer
     permission_classes = (permissions.IsAuthenticated, )
+    filter_backends = (DjangoFilterBackend, )
+    filter_fields = ('channel__name', )
 

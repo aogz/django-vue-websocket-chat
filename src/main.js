@@ -1,5 +1,5 @@
+import Cookies from 'js-cookie'
 import Vue from 'vue'
-import Vuex from 'vuex';
 import VueWebsocket from 'vue-websocket'
 import VueResource from 'vue-resource'
 import VueNoty from 'vuejs-noty'
@@ -9,9 +9,10 @@ import store from './store'
 
 
 Vue.use(VueNoty)
-Vue.use(VueWebsocket, "ws://localhost:8080");
+// Vue.use(VueWebsocket, "ws://localhost:8000");
 Vue.use(VueResource);
-Vue.use(Vuex);
+Vue.use(VueNoty, {timeout: 4000, progressBar: true, layout: 'topRight'})
+Vue.http.headers.common['X-CSRFToken'] = Cookies.get('csrftoken');
 
 Vue.config.productionTip = false;
 
