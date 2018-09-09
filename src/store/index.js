@@ -8,7 +8,11 @@ export default new Vuex.Store({
         currentUser: {},
         channels: [],
         users: [],
-        messages: [],
+        messages: {
+            results: [],
+            count: 0,
+            page: 1
+        },
         activeChannel: {},
     },
     mutations: {
@@ -22,7 +26,15 @@ export default new Vuex.Store({
             state.channels = channels
         },
         SET_MESSAGES (state, messages) {
-            state.messages = messages
+            state.messages = messages;
+            state.messages.results = state.messages.results.reverse();
+        },
+        NEXT_PAGE (state) {
+            state.messages.page++;
+        },
+        ADD_MESSAGES (state, messages) {
+            state.messages.results = [...messages.results.reverse(), ...state.messages.results]
+            state.messages.page = messages.page;
         },
         SET_CURRENT_USER (state, user) {
             state.currentUser = user
@@ -30,7 +42,34 @@ export default new Vuex.Store({
         ADD_CHANNEL (state, channel) {
             state.channels.push(channel);
             if (state.channels.length === 1) state.activeChannel = channel
-        }
+        },
+
+        // Sockets implementation
+        SOCKET_ONOPEN (state, event)  {
+            console.info('Connected to websockets server..')
+        },
+        SOCKET_ONCLOSE (state, event)  {
+            console.log('Close')
+        },
+        SOCKET_ONERROR (state, event)  {
+            console.error('Error: ', event)
+        },
+        // default handler called for all methods
+        SOCKET_ONMESSAGE (state, message)  {
+            console.log('Message: ', message)
+            if (state.activeChannel.chat_id === message.channel.is_private?message.channel.name:message.channel.chat_id) {
+                state.messages.results.push(message)
+            } else {
+                console.log('another one')
+            }
+        },
+        // mutations for reconnect methods
+        SOCKET_RECONNECT(state, count) {
+            console.log('Reconnect: ', count)
+        },
+        SOCKET_RECONNECT_ERROR(state) {
+            console.log('Reconnect Error')
+        },
     },
     actions: {
         loadChannels (context) {
@@ -43,13 +82,22 @@ export default new Vuex.Store({
 
             return promise
         },
-        loadMessages (context, {chat_id}) {
-            let promise = Vue.http.get(`/api/messages/?channel__name=${chat_id}`);
+        loadMessages (context, {chat_id, page}) {
+            if (!page) page = 1;
+
+            let promise = Vue.http.get(`/api/messages/?channel__name=${chat_id}&page=${page}`);
             promise.then(response => {
-                context.commit('SET_MESSAGES', response.results);
+                if (page === 1)
+                    context.commit('SET_MESSAGES', {page: page, ...response.body});
+                else
+                    context.commit('ADD_MESSAGES', {page: page, ...response.body});
             }, response => {});
 
             return promise
+        },
+        loadMore (context){
+            context.commit('NEXT_PAGE');
+            context.dispatch('loadMessages', {chat_id: context.state.activeChannel.chat_id, page: context.state.messages.page})
         },
         loadUsers (context) {
             let promise = Vue.http.get(`/api/users/`);

@@ -1,9 +1,10 @@
 <template>
     <div class="chat-wrapper h-100">
-        <h6>General</h6>
-        <hr />
         <MessagesList></MessagesList>
-        <MessageForm></MessageForm>
+        <hr />
+        <div class="mt-3">
+            <MessageForm></MessageForm>
+        </div>
     </div>
 </template>
 

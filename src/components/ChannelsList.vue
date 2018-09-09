@@ -2,7 +2,7 @@
     <div id="chats">
         <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
             <a class="nav-link disabled text-muted">Chats</a>
-            <a class="nav-link small" href="#" @click.prevent="selectChannel(channel)" v-for="channel in channels" :class="{'active': activeChannel.chat_id === channel.chat_id}">{{ channel.name }}</a>
+            <a class="nav-link small" href="#" @click.prevent="selectChannel(channel)" v-for="channel in channels" :key="channel.id" :class="{'active': activeChannel.chat_id === channel.chat_id}">{{ channel.name }}</a>
         </div>
         <hr />
         <form @submit.prevent="createChannel({name: newChannelName})">

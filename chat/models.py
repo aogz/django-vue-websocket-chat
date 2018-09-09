@@ -7,7 +7,10 @@ class Channel(models.Model):
     is_private = models.BooleanField(default=False)
 
     def add_message(self, text, sender, receiver=None):
-        new_message = Message(text=text, sender=sender, receiver=receiver)
+        if type(receiver) is str:
+            receiver = User.objects.filter(username=receiver).first()
+
+        new_message = Message(text=text, sender=sender, receiver=receiver, channel=self)
         new_message.save()
         return new_message
 

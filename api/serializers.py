@@ -24,13 +24,14 @@ class ChannelSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def get_chat_id(self, object):
-        return object.name
+        return object.id
 
 
 class MessageSerializer(serializers.ModelSerializer):
     channel = ChannelSerializer(read_only=True)
     sender = UserSerializer(read_only=True)
     receiver = UserSerializer(read_only=True)
+    sent_at = serializers.DateTimeField(format='%d/%m %H:%M')
 
     class Meta:
         model = chat_models.Message
