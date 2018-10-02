@@ -1,8 +1,10 @@
 <template>
     <div id="chats">
-        <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-            <a class="nav-link disabled text-muted">Chats</a>
-            <a class="nav-link small" href="#" @click.prevent="selectChannel(channel)" v-for="channel in channels" :key="channel.id" :class="{'active': activeChannel.chat_id === channel.chat_id}">{{ channel.name }}</a>
+        <div id="channel-list">
+            <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                <a class="nav-link disabled text-muted">Chats</a>
+                <a class="nav-link small" href="#" @click.prevent="selectChannel(channel)" v-for="channel in channels" :key="channel.id" :class="{'active': activeChannel.chat_id === channel.chat_id}">{{ channel.name }}</a>
+            </div>
         </div>
         <hr />
         <form @submit.prevent="createChannel({name: newChannelName})">
@@ -22,7 +24,7 @@
     import { mapActions, mapState, mapMutations } from 'vuex'
 
     export default {
-        name: 'ChannelsList',
+        name: 'ChannelList',
         data () {
             return {
                 newChannelName: ''
@@ -38,7 +40,7 @@
             ...mapActions(['loadChannels', 'selectChannel']),
             createChannel (channel) {
                 this.$store.dispatch('createChannel', channel).then(response => {
-                    this.$noty.success('Channel was created');
+                    this.$noty.success('Chat created and added to the end of the list.');
                     this.newChannelName = '';
                 }, response => {
                     if (response.body instanceof Object) {
@@ -55,3 +57,12 @@
         }
     }
 </script>
+
+<style scoped>
+#channel-list {
+    width: 100%;
+    max-height: 250px; 
+    flex: 1;
+    overflow: auto;
+}   
+</style>

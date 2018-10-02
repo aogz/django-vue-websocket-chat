@@ -24,3 +24,12 @@
         }
     }
 </script>
+
+<style scoped>
+#users {
+    width: 100%;
+    max-height: 200px; 
+    flex: 1;
+    overflow: auto;
+}   
+</style>

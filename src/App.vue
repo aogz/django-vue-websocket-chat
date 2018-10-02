@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row" id="chat-block">
             <div class="col-md-2">
-                <ChannelsList></ChannelsList>
+                <ChannelList></ChannelList>
                 <UserList></UserList>
             </div>
             <div class="col-md-10">
@@ -13,13 +13,13 @@
 </template>
 
 <script>
-    import ChannelsList from './components/ChannelsList'
+    import ChannelList from './components/ChannelList'
     import UserList from './components/UserList'
     import ChatWrapper from './components/ChatWrapper'
 
     export default {
         name: 'app',
-        components: {ChannelsList, UserList, ChatWrapper}
+        components: {ChannelList, UserList, ChatWrapper}
     }
 </script>
 
