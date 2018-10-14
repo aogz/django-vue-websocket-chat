@@ -9,7 +9,6 @@ import App from './App.vue'
 import store from './store'
 
 Vue.use(VueChatScroll);
-Vue.use(VueNoty);
 Vue.use(VueNativeSock, 'ws://localhost:8000/ws/chat/', { store: store, format: 'json'});
 Vue.use(VueNoty, {timeout: 4000, progressBar: true, layout: 'topRight'});
 Vue.use(VueResource);
